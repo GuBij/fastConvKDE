@@ -1,0 +1,25 @@
+#!/bin/bash -l
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=02:00:00
+
+# Set the correct environment
+ cd .
+
+ timeStep=0.05
+ QValues=(56.5 57.6 50.9 48.4 40.9 41.2 41.7 41.5 41.4 40.3 45.4 40.7 40.5 39.9 56.4 99.7 45.2 43.4 45.3 45.9 40.5 40.2 38.5 41.8)
+ expNr=(17 18 21 22 23 24 28 29 32 37 38 39 40 41 42 46 53 54 55 56 58 59 60 70)
+ for i in "${QValues[@]}"
+ do
+    cp inputDict_orig ./inputDict
+    sed -i "s/<Q>/$i/" inputDict
+    sed -i "s/<dt>/$timeStep/" inputDict
+	mv PARAMS_KTaylorOF_meteo5606_exp${expNr[$count]}.txt output/PARAMS_KTaylorOF_meteo5606.txt
+	mv PARAMS_UopenField_meteo5606_exp${expNr[$count]}.txt output/PARAMS_UopenField_meteo5606.txt
+    mpirun -np $PBS_NP fastConc -Langevin
+#	mpirun -np $PBS_NP slowConc -Langevin -prodKernel
+	mv output/CONC* output/conc_exp${expNr[$count]}.txt
+	mv output/PARAMS_KTaylorOF_meteo5606.txt ./PARAMS_KTaylorOF_meteo5606_exp${expNr[$count]}.txt
+	mv output/PARAMS_UopenField_meteo5606.txt ./PARAMS_UopenField_meteo5606_exp${expNr[$count]}.txt
+    rm inputDict
+    count=`expr $count + 1`
+ done
