@@ -1,0 +1,52 @@
+
+ meteofile	meteo5606.txt;
+
+ terrainModel	openField;
+
+ stackHeight	0.46;
+
+ releaseDuration	600.0;
+
+ diameter	2.8;
+
+ flowRate	0.0;
+
+ gasTemp	15.0;
+
+ humidityType	vaporPressure;
+
+ windVarType	velocity;
+
+ latitude	42.49333;
+
+ measureFreq	600.0;
+
+ noPartPerRel	1000;
+
+ xMax		1600;
+
+ yMax		1600;
+
+ zMax		100;
+
+ sourceStrength	<Q>;
+
+ dtByTauL	<dt>;
+
+ minTimeStep	0.0;
+
+ noProcs	1;
+
+ openField
+ {
+
+    z0		0.008;
+
+    zref	8.0;
+
+    zrefTemp	8.0;
+
+    zrefTemp0	2.0;
+
+    zrefWindVar	2.0;
+ }
